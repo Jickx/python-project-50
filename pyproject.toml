@@ -4,13 +4,17 @@ version = "0.1.0"
 description = ""
 authors = ["Valentin Sharonov <valentin.sharonov@gmail.com>"]
 
+packages = [
+    {include = "gendiff"},
+]
+
 [tool.poetry.dependencies]
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-gendiff = "gendiff.scripts:gendiff:main"
+gendiff = "gendiff.scripts.gendiff:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
