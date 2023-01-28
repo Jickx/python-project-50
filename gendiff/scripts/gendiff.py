@@ -20,7 +20,8 @@ def generate_diff(file1_path, file2_path):
     file1_json = json.load(open(file1_path, 'r'))
     file2_json = json.load(open(file2_path, 'r'))
     gen_diff = diff(file1_json, file2_json, syntax='explicit')
-    sorted_keys = sorted(set(list(file1_json) + list(file2_json)))
+    keys = list(file1_json) + list(file2_json)
+    sorted_keys = sorted(set(keys))
     result = []
     for key in sorted_keys:
         if key in gen_diff[jd.delete]:
@@ -41,7 +42,7 @@ def gen_abs_path(path):
 
 def main():
     args = parse_args()
-    result = '\n'.join(generate_diff(args.first_file, args.second_file))
+    result = generate_diff(args.first_file, args.second_file)
     print(result)
 
 
