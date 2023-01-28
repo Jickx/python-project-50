@@ -1,5 +1,6 @@
 import argparse
 import json
+import os.path
 
 import jsondiff as jd
 from jsondiff import diff
@@ -15,37 +16,33 @@ def parse_args():
     return parser.parse_args()
 
 
-def generate_difference(file1_json, file2_json) -> list:
-    get_diff = diff(file1_json, file2_json, syntax='explicit')
+def generate_diff(file1_path, file2_path):
+    file1_json = json.load(open(file1_path, 'r'))
+    file2_json = json.load(open(file2_path, 'r'))
+    gen_diff = diff(file1_json, file2_json, syntax='explicit')
     sorted_keys = sorted(set(list(file1_json) + list(file2_json)))
     result = []
     for key in sorted_keys:
-        if key in get_diff[jd.delete]:
+        if key in gen_diff[jd.delete]:
             result.append(f'- {key}: {file1_json[key]}')
-        elif key in get_diff[jd.insert]:
+        elif key in gen_diff[jd.insert]:
             result.append(f'+ {key}: {file2_json[key]}')
-        elif key in get_diff[jd.update]:
+        elif key in gen_diff[jd.update]:
             result.append(f'- {key}: {file1_json[key]}')
             result.append(f'+ {key}: {file2_json[key]}')
         else:
             result.append(f'  {key}: {file1_json[key]}')
-    return result
+    return '\n'.join(result)
 
 
-def collect_json_from_file(file_path):
-    return json.load(open(file_path, 'r'))
+def gen_abs_path(path):
+    os.path.abspath(path)
 
 
 def main():
     args = parse_args()
-    file1_json, file2_json = (
-        collect_json_from_file(args.first_file),
-        collect_json_from_file(args.second_file)
-    )
-
-    result = generate_difference(file1_json, file2_json)
-    for line in result:
-        print(line)
+    result = '\n'.join(generate_diff(args.first_file, args.second_file))
+    print(result)
 
 
 if __name__ == "__main__":
