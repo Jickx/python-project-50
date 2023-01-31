@@ -1,4 +1,3 @@
-import os.path
 from gendiff.file_parser import parse_file
 from gendiff.cli import get_args
 import jsondiff as jd
