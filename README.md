@@ -3,4 +3,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/1ac36cb0f1f91f85effe/maintainability)](https://codeclimate.com/github/Jickx/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1ac36cb0f1f91f85effe/test_coverage)](https://codeclimate.com/github/Jickx/python-project-50/test_coverage)
 ### Asciinema:
-[![asciicast](https://asciinema.org/a/tBz5HduVJVcoRlQXa5IfWVHyD.svg)](https://asciinema.org/a/tBz5HduVJVcoRlQXa5IfWVHyD)
+#### Step 6:
+[![asciicast](https://asciinema.org/a/nBy5peYLB2VQYZwUgrvbszorA.svg)](https://asciinema.org/a/nBy5peYLB2VQYZwUgrvbszorA)
+#### Step 7:
+[![asciicast](https://asciinema.org/a/mtuh3UpVO93D7PDsOUnGOoJ7Y.svg)](https://asciinema.org/a/mtuh3UpVO93D7PDsOUnGOoJ7Y)
