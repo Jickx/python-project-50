@@ -1,36 +1,30 @@
+from gendiff.formatters.normalize import get_normalized_value
+
 SPACES = '    '
 ONE_SPACE = ' '
 OPEN_CURLY_BRACKET = '{'
 CLOSED_CURLY_BRACKET = '}'
 
 
-def get_normalized_value(value: any) -> str:
-    """Normalize value."""
-    if isinstance(value, bool):
-        return (ONE_SPACE + 'true' if value is True else
-                ONE_SPACE + 'false')
-    elif value is None:
-        return ONE_SPACE + 'null'
-    return ONE_SPACE + str(value) if value else value
-
-
 def get_type(item_type: str) -> str:
     """Get proper prefix corresponding to item type."""
-    item_types = {
+    item_prefix = {
         'added': '  + ',
         'deleted': '  - ',
         'unchanged': '    ',
         'nested': '    ',
     }
-    return item_types[item_type]
+    return item_prefix[item_type]
 
 
 def write_line(key: str, value: str,
                depth: int, item_type='unchanged') -> str:
     """Write line for corresponding key, value and type."""
     indent = SPACES * depth
-    norm_value = get_normalized_value(value)
-    return f"{indent}{get_type(item_type)}{key}:{norm_value}"
+    norm_value = get_normalized_value(value, 'stylish')
+    if not norm_value:
+        return f"{indent}{get_type(item_type)}{key}:"
+    return f"{indent}{get_type(item_type)}{key}:{ONE_SPACE}{norm_value}"
 
 
 def walk_values(values: dict, depth: int) -> list:
@@ -49,7 +43,7 @@ def walk_values(values: dict, depth: int) -> list:
     return result
 
 
-def stylish_format(diff: list) -> str:
+def stylish_format(diff: list) -> list:
     """Generate comparison output via stylish formatter."""
     result = [OPEN_CURLY_BRACKET]
 
@@ -90,4 +84,4 @@ def stylish_format(diff: list) -> str:
                     result.append(write_line(key, value2, depth, 'added'))
         result.append(SPACES * depth + CLOSED_CURLY_BRACKET)
     walk(diff)
-    return '\n'.join(result)
+    return result

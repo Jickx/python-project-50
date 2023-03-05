@@ -1,9 +1,10 @@
 from gendiff.file_parser import parse_file
 from gendiff.cli import get_args
 from gendiff.format import format_items
+import json
 
 
-def compare_files_data(data1: dict, data2: dict) -> list:
+def generate_diff(data1: dict, data2: dict) -> list:
     """Generate comparison data list of two files."""
     all_keys = sorted(set(data1) | set(data2))
     diff = []
@@ -23,7 +24,7 @@ def compare_files_data(data1: dict, data2: dict) -> list:
             })
         elif isinstance(data1[key], dict)\
                 and isinstance(data2[key], dict):
-            child = compare_files_data(data1[key], data2[key])
+            child = generate_diff(data1[key], data2[key])
             diff.append({
                 'type': 'nested',
                 'key': key,
@@ -51,13 +52,19 @@ def print_result_data_in_file(data: str) -> None:
         temp.write(data)
 
 
+def get_diff_str(formatted_diff: list) -> str:
+    return '\n'.join(formatted_diff)
+
+
 def main():
     args = get_args()
+    formatter_name = args.format
     file1_data = parse_file(args.first_file)
     file2_data = parse_file(args.second_file)
-    diff = compare_files_data(file1_data, file2_data)
-    formatted_diff = format_items(diff)
-    print(formatted_diff)
+    diff = generate_diff(file1_data, file2_data)
+    formatted_diff = format_items(diff, formatter_name)
+    print_result_data_in_file(get_diff_str(formatted_diff))
+    print(get_diff_str(formatted_diff))
 
 
 if __name__ == "__main__":
