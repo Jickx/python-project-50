@@ -22,8 +22,7 @@ def generate_diff(data1: dict, data2: dict) -> list:
                 'key': key,
                 'value': data2[key],
             })
-        elif isinstance(data1[key], dict)\
-                and isinstance(data2[key], dict):
+        elif isinstance(data1[key], dict) and isinstance(data2[key], dict):
             child = generate_diff(data1[key], data2[key])
             diff.append({
                 'type': 'nested',
@@ -58,13 +57,15 @@ def get_diff_str(formatted_diff: list) -> str:
 
 def main():
     args = get_args()
-    formatter_name = args.format
+    format_name = args.format
     file1_data = parse_file(args.first_file)
     file2_data = parse_file(args.second_file)
     diff = generate_diff(file1_data, file2_data)
-    formatted_diff = format_items(diff, formatter_name)
-    print_result_data_in_file(get_diff_str(formatted_diff))
-    print(get_diff_str(formatted_diff))
+    formatted_diff = format_items(diff, format_name)
+    if format_name == 'json':
+        print(formatted_diff)
+    else:
+        print(get_diff_str(formatted_diff))
 
 
 if __name__ == "__main__":

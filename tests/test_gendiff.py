@@ -55,6 +55,15 @@ def test_yaml_plain():
     assert formatted_str == expected
 
 
+def test_json_json():
+    file_data1 = parse_file('file1.json')
+    file_data2 = parse_file('file2.json')
+    comparison_data = generate_diff(file_data1, file_data2)
+    formatted = format_items(comparison_data, 'json')
+    expected = get_expected_result('json')
+    assert formatted == expected
+
+
 def test_get_normalized_value():
     value1 = None
     value2 = False
