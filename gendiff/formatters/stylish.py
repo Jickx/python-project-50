@@ -43,6 +43,45 @@ def walk_values(values: dict, depth: int) -> list:
     return result
 
 
+def changed_item_format(depth, item, item_type, key, result):
+    """Formatting logic for changed items."""
+    value1 = item['value1']
+    value2 = item['value2']
+    if isinstance(value1, dict):
+        result.append(write_line(key, OPEN_CURLY_BRACKET,
+                                 depth, 'deleted'))
+        result.extend(walk_values(value1, depth))
+        result.append(write_line(key, value2, depth, 'added'))
+    if isinstance(value2, dict):
+        result.append(write_line(key, OPEN_CURLY_BRACKET,
+                                 depth, item_type))
+        result.append(write_line(key, value1, depth, 'deleted'))
+        result.extend(walk_values(value2, depth))
+    elif not isinstance(value1, dict) \
+            and not isinstance(value2, dict):
+        result.append(write_line(key, value1, depth, 'deleted'))
+        result.append(write_line(key, value2, depth, 'added'))
+
+
+def added_item_format(depth, item, item_type, key, result):
+    """Formatting logic for added and removed items."""
+    value = item['value']
+    if isinstance(value, dict):
+        result.append(write_line(key, OPEN_CURLY_BRACKET,
+                                 depth, item_type))
+        result.extend(walk_values(value, depth))
+    else:
+        result.append(write_line(key, value, depth, item_type))
+
+
+def nested_item_format(depth, item, item_type, key, walk, result):
+    """Formatting logic for nested items."""
+    children = item['children']
+    result.append(write_line(key, OPEN_CURLY_BRACKET,
+                             depth, item_type))
+    walk(children, depth + 1)
+
+
 def stylish_format(diff: list) -> list:
     """Generate comparison output via stylish formatter."""
     result = [OPEN_CURLY_BRACKET]
@@ -53,35 +92,12 @@ def stylish_format(diff: list) -> list:
             key = item['key']
 
             if 'children' in item:
-                children = item['children']
-                result.append(write_line(key, OPEN_CURLY_BRACKET,
-                                         depth, item_type))
-                walk(children, depth + 1)
+                nested_item_format(depth, item, item_type, key, walk, result)
             elif 'value' in item:
-                value = item['value']
-                if isinstance(value, dict):
-                    result.append(write_line(key, OPEN_CURLY_BRACKET,
-                                             depth, item_type))
-                    result.extend(walk_values(value, depth))
-                else:
-                    result.append(write_line(key, value, depth, item_type))
+                added_item_format(depth, item, item_type, key, result)
             elif 'value1' in item:
-                value1 = item['value1']
-                value2 = item['value2']
-                if isinstance(value1, dict):
-                    result.append(write_line(key, OPEN_CURLY_BRACKET,
-                                             depth, 'deleted'))
-                    result.extend(walk_values(value1, depth))
-                    result.append(write_line(key, value2, depth, 'added'))
-                if isinstance(value2, dict):
-                    result.append(write_line(key, OPEN_CURLY_BRACKET,
-                                             depth, item_type))
-                    result.append(write_line(key, value1, depth, 'deleted'))
-                    result.extend(walk_values(value2, depth))
-                elif not isinstance(value1, dict) \
-                        and not isinstance(value2, dict):
-                    result.append(write_line(key, value1, depth, 'deleted'))
-                    result.append(write_line(key, value2, depth, 'added'))
+                changed_item_format(depth, item, item_type, key, result)
         result.append(SPACES * depth + CLOSED_CURLY_BRACKET)
+
     walk(diff)
     return result

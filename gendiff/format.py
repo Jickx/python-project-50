@@ -11,4 +11,3 @@ def format_items(diff: list, format_name='stylish') -> list:
     }
     formatter = formatters_types[format_name]
     return formatter(diff)
-

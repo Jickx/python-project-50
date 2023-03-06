@@ -1,7 +1,6 @@
 from gendiff.file_parser import parse_file
 from gendiff.cli import get_args
 from gendiff.format import format_items
-import json
 
 
 def generate_diff(data1: dict, data2: dict) -> list:
