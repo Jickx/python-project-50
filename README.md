@@ -5,7 +5,6 @@
 
 ## **About:**
 Program generate a comparison of two json/yaml files in various formats.
-The output type depends on the selected format:
 - **stylish** [default]
 - **plain**
 - **json**
