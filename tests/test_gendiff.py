@@ -1,11 +1,9 @@
 import pytest
 import os
 
-from gendiff.scripts.gendiff import generate_diff, get_diff_str
+from gendiff.scripts.gendiff import generate_diff
 from gendiff.file_parser import parse_file
-from gendiff.format import format_items
 from gendiff.formatters.stylish import get_normalized_value
-from gendiff.formatters.stylish import walk_values
 
 
 def get_expected_result(formatter_name):
