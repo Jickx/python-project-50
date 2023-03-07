@@ -1,16 +1,15 @@
-# **Gendiff** - compare two json and/or yaml files
+# Gendiff - compare two json and/or yaml files
 [![Actions Status](https://github.com/Jickx/python-project-50/workflows/hexlet-check/badge.svg)](https://github.com/Jickx/python-project-50/actions)
 [![Maintainability](https://api.codeclimate.com/v1/badges/1ac36cb0f1f91f85effe/maintainability)](https://codeclimate.com/github/Jickx/python-project-50/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1ac36cb0f1f91f85effe/test_coverage)](https://codeclimate.com/github/Jickx/python-project-50/test_coverage)
 
-## **About:**
+## About:
 Program generate a comparison of two json/yaml files in various formats.
-The output type depends on the selected format:
 - **stylish** [default]
 - **plain**
 - **json**
 
-## **Setup:**
+## Setup:
 ```bash
 git clone https://github.com/Utrian/python-project-50
 cd python-project-50
@@ -33,13 +32,13 @@ optional arguments:
                         set format of output
 ```
 
-## **File samples:**
+## File samples:
 * tests/fixtures/json/file1.json
 * tests/fixtures/json/file2.json
 * tests/fixtures/yaml/file1.yaml
 * tests/fixtures/yaml/file2.yaml
 
-### Asciinema:
+## Asciinema:
 #### Step 6:
 [![asciicast](https://asciinema.org/a/nBy5peYLB2VQYZwUgrvbszorA.svg)](https://asciinema.org/a/nBy5peYLB2VQYZwUgrvbszorA)
 #### Step 7:
