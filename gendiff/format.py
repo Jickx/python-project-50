@@ -3,7 +3,7 @@ from gendiff.formatters.plain import plain_format
 from gendiff.formatters.json import json_format
 
 
-def format_items(diff: list, format_name='stylish') -> list:
+def format_items(diff: list, format_name: str) -> list:
     formatters_types = {
         'stylish': stylish_format,
         'plain': plain_format,

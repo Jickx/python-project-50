@@ -4,12 +4,14 @@ from gendiff.format import format_items
 from gendiff.build_aux_tree import build_aux_tree
 
 
-def generate_diff(file1_data: dict, file2_data: dict, format_name: str):
+def generate_diff(filepath1: str, filepath2: str, format_name='stylish') -> str:
     """Generate comparison data list of two files."""
+    file1_data = parse_file(filepath1)
+    file2_data = parse_file(filepath2)
     diff = build_aux_tree(file1_data, file2_data)
     formatted_diff = format_items(diff, format_name)
     if format_name == 'json':
-        return formatted_diff
+        return str(formatted_diff)
     return get_diff_str(formatted_diff)
 
 
@@ -27,9 +29,8 @@ def get_diff_str(formatted_diff: list) -> str:
 def main():
     args = get_args()
     format_name = args.format
-    file1_data = parse_file(args.first_file)
-    file2_data = parse_file(args.second_file)
-    print(generate_diff(file1_data, file2_data, format_name))
+    filepath1, filepath2 = args.first_file, args.second_file
+    print(generate_diff(filepath1, filepath2, format_name))
 
 
 if __name__ == "__main__":

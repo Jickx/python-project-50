@@ -15,7 +15,7 @@ def get_expected_result(formatter_name):
 
 
 @pytest.mark.parametrize(
-    "test_file1, test_file2, format_name",
+    "filepath1, filepath2, format_name",
     [
         pytest.param(
             'file1.json',
@@ -49,10 +49,8 @@ def get_expected_result(formatter_name):
         ),
     ],
 )
-def test_generate_diff(test_file1, test_file2, format_name):
-    file_data1 = parse_file(str(test_file1))
-    file_data2 = parse_file(str(test_file2))
-    result = generate_diff(file_data1, file_data2, str(format_name))
+def test_generate_diff(filepath1, filepath2, format_name):
+    result = generate_diff(filepath1, filepath2, format_name)
     expected = get_expected_result(format_name)
     assert result == expected
 
