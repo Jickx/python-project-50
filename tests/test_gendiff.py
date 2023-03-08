@@ -2,13 +2,12 @@ import pytest
 import os
 
 from gendiff.scripts.gendiff import generate_diff
-from gendiff.file_parser import parse_file
 from gendiff.formatters.stylish import get_normalized_value
 
 
 def get_expected_result(formatter_name):
     path = 'tests/fixtures/output/'
-    filename = f'{formatter_name}_expected.txt'
+    filename = f'{formatter_name}_expected'
     path_expected = os.path.join(path, filename)
     with open(path_expected, 'r') as file:
         return file.read()

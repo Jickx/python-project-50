@@ -22,8 +22,6 @@ def write_line(key: str, value: str,
     """Write line for corresponding key, value and type."""
     indent = SPACES * depth
     norm_value = get_normalized_value(value, 'stylish')
-    if not norm_value:
-        return f"{indent}{get_type(item_type)}{key}:"
     return f"{indent}{get_type(item_type)}{key}:{ONE_SPACE}{norm_value}"
 
 
