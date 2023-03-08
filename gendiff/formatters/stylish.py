@@ -51,8 +51,8 @@ def changed_item_format(depth, item, item_type, key, result):
         result.extend(walk_values(value1, depth))
         result.append(write_line(key, value2, depth, 'added'))
     if isinstance(value2, dict):
-        result.append(write_line(key, OPEN_CURLY_BRACKET, depth))
         result.append(write_line(key, value1, depth, 'deleted'))
+        result.append(write_line(key, OPEN_CURLY_BRACKET, depth, 'added'))
         result.extend(walk_values(value2, depth))
     elif not isinstance(value1, dict) \
             and not isinstance(value2, dict):
