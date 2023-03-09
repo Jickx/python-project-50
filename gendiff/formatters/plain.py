@@ -28,7 +28,7 @@ def plain_format(diff: list) -> list:
                 line = write_line(prop, value, item_type)
                 result.append(line)
             elif item_type == 'changed':
-                value = [(item['value1']), (item['value2'])]
+                value = [item['value1'], item['value2']]
                 line = write_line(prop, value, item_type)
                 result.append(line)
             prop.pop()

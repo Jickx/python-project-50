@@ -32,7 +32,6 @@ def main():
     format_name = args.format
     filepath1, filepath2 = args.first_file, args.second_file
     result = generate_diff(filepath1, filepath2, format_name)
-    # print_result_data_in_file(result)
     print(result)
 
 
