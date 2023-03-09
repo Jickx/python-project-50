@@ -4,7 +4,7 @@ def plain_normalized(value):
         return '[complex value]'
     elif isinstance(value, bool):
         return 'true' if value is True else 'false'
-    elif value == 0:
+    elif value == '0':
         return 0
     elif value is None:
         return 'null'
